@@ -6,7 +6,7 @@ bool isprime(int n)
     if(n==2||n==3) return true;
     for(int i=2;i<=sqrt(n);i++)
     {
-        if(n%2==0)
+        if(n%i==0)
             return false;
     }
     return true;
@@ -19,9 +19,17 @@ int main()
         if(isprime(i)) 
         primearr.push_back(i);
     int cnt=0;
-    for(int i=3;i<primearr.size();i++)
+    /*for(auto t:primearr)
+    {
+        cout<<t<<" ";
+    }*/
+    //cout<<endl;
+    for(int i=1;i<=primearr.size();i++)
         if (primearr[i]-primearr[i-1]==2)
-        cnt++;
-    cout<<cnt/2;
+        {
+            cnt++;
+           cout<<primearr[i]<<" "<<primearr[i-1]<<endl;
+            }
+    cout<<cnt;
     return 0;
 }

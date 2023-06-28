@@ -2,35 +2,40 @@
 using namespace std;
 int main()
 {
-    int flag=1;
-    string s;cin>>s;
-    vector <char> s1;
-    unsigned long long sn=0,t=1;
-    for(int i=s.length()-1;i>=0;i--)
+    bool flag=true;
+    int tx=0;
+    string s;
+    getline(cin,s);
+    int size=s.length();
+    vector <string> st;
+    string t,count;int change=0;
+    if(s[0]=='-')
+    tx=1;
+    for(int i=size-1;i>=tx;i--)
     {
-        int st = s[i]-'0';
-        sn=sn+st*t;
-        t=t*10;
+        change=((s[i]-'0')*2+change);
+        t=change%10+'0';
+        st.push_back(t);
+        change=change/10;
+        if(s.find(t)==-1)
+        {
+            flag=false;
+            break;
+        }
     }
-    sn=sn*2;
-    int cnt=0;
-    while(sn)
-    {
-        char st= sn%10+'0';
-        s1.push_back(st);
-        sn=sn/10;
-    }
-    reverse(s1.begin(),s1.end());
-    for(int i=0;i<s1.size();i++)
-    {
-        if(s.find(s1[i])==-1)
-        flag=0;
-    }
+    if(tx==1)
+        size-=1;
+    if(st.size()!=size)
+        flag=false;
     if(flag)
-    cout<<"Yes"<<endl;
-    else
-    cout<<"No"<<endl;
-    for(int i=0;i<s1.size();i++)
-    cout<<s1[i];
+    {
+        cout<<"Yes"<<endl;
+        reverse(st.begin(),st.end());
+        if(tx==1)
+            cout<<"-";
+        for(auto it:st)
+            cout<<it;
+    }
+    else cout<<"No";
     return 0;
 }

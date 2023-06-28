@@ -1,49 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
-map<int, int> mp;
-bool check()
-{
-    int x, y;
-    string s;
-    cin >> x >> s;
-    if (s == "and")
-    { // x and y are siblings
-        cin >> y >> s >> s;
-        return mp[x] / 2 == mp[y] / 2;
-    }
-    else
-    {
-        cin >> s >> s;
-        if (s == "root")
-        { // x is the root
-            return mp[x] == 1;
-        }
-        else if (s == "parent")
-        { // x is the parent of y
-            cin >> s >> y;
-            return mp[x] == mp[y] / 2;
-        }
-        else if (s == "child")
-        { // x is a child of y
-            cin >> s >> y;
-            return mp[y] == mp[x] / 2;
-        }
-    }
+int pre[1100];
+int in[1100];
+int l[1100],r[1100];
+int post(int root, int start, int end) {
+    if(start > end) 
+        return 0;
+    int s=pre[root];
+    int i = start;
+    while(i < end && in[i] != pre[root]) i++;
+    l[s]=post(root + 1, start, i - 1);
+    r[s]=post(root + 1 + i-start , i + 1, end);
+    return s;
 }
-int main()
+int print(int s)
 {
-    int n, m;
-    cin >> n >> m;
-    vector<int> heap;
-    for (int i = 0, x; i < n; i++)
+    queue<int>Q;
+    Q.push(s);
+    while(!Q.empty())
     {
-        cin >> x;
-        heap.push_back(x);
-        push_heap(heap.begin(), heap.end(), greater<int>());
-    }
-    for (int i = 0; i < n; i++)
-        mp[heap[i]] = i + 1;
-    while (m--)
-        puts(check() ? "T" : "F");
+        int a=Q.front();
+        Q.pop();
+        if(a!=s) printf(" ");
+        printf("%d",a);
+        if(r[a])
+           Q.push(r[a]);
+        if(l[a]) 
+           Q.push(l[a]);
+        //反转的话只要改变一下输出顺序即可，及先右子树入队，再左子树；
+    } 
+    printf("\n");
+}
+int main(){
+    int n;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+        scanf("%d",&in[i]);
+    for(int i=0;i<n;i++)
+        scanf("%d",&pre[i]);
+    post(0,0,n-1);
+    print(pre[0]);
+    system("pause");
     return 0;
 }

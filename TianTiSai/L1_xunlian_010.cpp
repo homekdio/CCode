@@ -22,7 +22,7 @@ int main()
                 else sign++;
             }
         }
-        printf("lowercase=%d capital=%d space=%d sign=%d",lowercase
+        printf("lowercase=%d capital=%d space=%d sign=%d\n",lowercase,capital,space,sign);
     }
     return 0;
 }
