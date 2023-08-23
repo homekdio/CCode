@@ -7,6 +7,6 @@ public:
         maxprofit = max(maxprofit,price-minprice);
         minprice = min(minprice,price);
     }
-    return maxprofit;
+     return maxprofit;
     }
 };
